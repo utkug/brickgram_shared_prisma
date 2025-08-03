@@ -1,0 +1,1 @@
+Prisma Client for Brickgram Backend Project
