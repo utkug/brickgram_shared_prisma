@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id              String   @id @default(ulid())
+  username        String   @unique
+  name            String
+  email           String   @unique
+  password        String
+  created_at      DateTime @default(now())
+  updated_at      DateTime @default(now()) @updatedAt
+  profile_picture String?
+  bio             String?
+  location        String?
+  is_private      Boolean  @default(false)
+  is_verified     Boolean  @default(false)
+  status          Status   @default(ACTIVE)
+  role            Role     @default(USER)
+
+  followedBy Follows[] @relation("FollowedBy")
+  following  Follows[] @relation("Following")
+
+  blockedBy Blocks[] @relation("BlockedBy")
+  blocking  Blocks[] @relation("Blocking")
+}
+
+model Follows {
+  id           String   @id @default(uuid())
+  follower_id  String
+  following_id String
+  created_at   DateTime @default(now())
+
+  follower  Users @relation("FollowedBy", fields: [follower_id], references: [id], onDelete: Cascade)
+  following Users @relation("Following", fields: [following_id], references: [id], onDelete: Cascade)
+
+  @@unique([follower_id, following_id]) // Örnek olarak ["Anakin", "Padme"] bağlantısı sadece bir kere bulunabilir DB'de
+}
+
+model Blocks {
+  id         String   @id @default(uuid())
+  blocker_id String
+  blocked_id String
+  created_at DateTime @default(now())
+
+  blocker  Users @relation("BlockedBy", fields: [blocker_id], references: [id], onDelete: Cascade)
+  blocking Users @relation("Blocking", fields: [blocked_id], references: [id], onDelete: Cascade)
+
+  @@unique([blocker_id, blocked_id])
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Status {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+  DELETED
+}
