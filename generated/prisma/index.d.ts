@@ -33,32 +33,45 @@ export type Blocks = $Result.DefaultSelection<Prisma.$BlocksPayload>
  * Enums
  */
 export namespace $Enums {
-  export const Role: {
+  export const UserRole: {
   USER: 'USER',
   ADMIN: 'ADMIN'
 };
 
-export type Role = (typeof Role)[keyof typeof Role]
+export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 
 
-export const Status: {
+export const UserStatus: {
   ACTIVE: 'ACTIVE',
   INACTIVE: 'INACTIVE',
   SUSPENDED: 'SUSPENDED',
   DELETED: 'DELETED'
 };
 
-export type Status = (typeof Status)[keyof typeof Status]
+export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus]
+
+
+export const FollowStatus: {
+  PENDING: 'PENDING',
+  ACCEPTED: 'ACCEPTED',
+  DECLINED: 'DECLINED'
+};
+
+export type FollowStatus = (typeof FollowStatus)[keyof typeof FollowStatus]
 
 }
 
-export type Role = $Enums.Role
+export type UserRole = $Enums.UserRole
 
-export const Role: typeof $Enums.Role
+export const UserRole: typeof $Enums.UserRole
 
-export type Status = $Enums.Status
+export type UserStatus = $Enums.UserStatus
 
-export const Status: typeof $Enums.Status
+export const UserStatus: typeof $Enums.UserStatus
+
+export type FollowStatus = $Enums.FollowStatus
+
+export const FollowStatus: typeof $Enums.FollowStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -1151,8 +1164,8 @@ export namespace Prisma {
     location: string | null
     is_private: boolean | null
     is_verified: boolean | null
-    status: $Enums.Status | null
-    role: $Enums.Role | null
+    status: $Enums.UserStatus | null
+    role: $Enums.UserRole | null
   }
 
   export type UsersMaxAggregateOutputType = {
@@ -1168,8 +1181,8 @@ export namespace Prisma {
     location: string | null
     is_private: boolean | null
     is_verified: boolean | null
-    status: $Enums.Status | null
-    role: $Enums.Role | null
+    status: $Enums.UserStatus | null
+    role: $Enums.UserRole | null
   }
 
   export type UsersCountAggregateOutputType = {
@@ -1328,8 +1341,8 @@ export namespace Prisma {
     location: string | null
     is_private: boolean
     is_verified: boolean
-    status: $Enums.Status
-    role: $Enums.Role
+    status: $Enums.UserStatus
+    role: $Enums.UserRole
     _count: UsersCountAggregateOutputType | null
     _min: UsersMinAggregateOutputType | null
     _max: UsersMaxAggregateOutputType | null
@@ -1420,8 +1433,8 @@ export namespace Prisma {
       location: string | null
       is_private: boolean
       is_verified: boolean
-      status: $Enums.Status
-      role: $Enums.Role
+      status: $Enums.UserStatus
+      role: $Enums.UserRole
     }, ExtArgs["result"]["users"]>
     composites: {}
   }
@@ -1807,8 +1820,8 @@ export namespace Prisma {
     readonly location: FieldRef<"Users", 'String'>
     readonly is_private: FieldRef<"Users", 'Boolean'>
     readonly is_verified: FieldRef<"Users", 'Boolean'>
-    readonly status: FieldRef<"Users", 'Status'>
-    readonly role: FieldRef<"Users", 'Role'>
+    readonly status: FieldRef<"Users", 'UserStatus'>
+    readonly role: FieldRef<"Users", 'UserRole'>
   }
     
 
@@ -2281,6 +2294,7 @@ export namespace Prisma {
     follower_id: string | null
     following_id: string | null
     created_at: Date | null
+    status: $Enums.FollowStatus | null
   }
 
   export type FollowsMaxAggregateOutputType = {
@@ -2288,6 +2302,7 @@ export namespace Prisma {
     follower_id: string | null
     following_id: string | null
     created_at: Date | null
+    status: $Enums.FollowStatus | null
   }
 
   export type FollowsCountAggregateOutputType = {
@@ -2295,6 +2310,7 @@ export namespace Prisma {
     follower_id: number
     following_id: number
     created_at: number
+    status: number
     _all: number
   }
 
@@ -2304,6 +2320,7 @@ export namespace Prisma {
     follower_id?: true
     following_id?: true
     created_at?: true
+    status?: true
   }
 
   export type FollowsMaxAggregateInputType = {
@@ -2311,6 +2328,7 @@ export namespace Prisma {
     follower_id?: true
     following_id?: true
     created_at?: true
+    status?: true
   }
 
   export type FollowsCountAggregateInputType = {
@@ -2318,6 +2336,7 @@ export namespace Prisma {
     follower_id?: true
     following_id?: true
     created_at?: true
+    status?: true
     _all?: true
   }
 
@@ -2398,6 +2417,7 @@ export namespace Prisma {
     follower_id: string
     following_id: string
     created_at: Date
+    status: $Enums.FollowStatus
     _count: FollowsCountAggregateOutputType | null
     _min: FollowsMinAggregateOutputType | null
     _max: FollowsMaxAggregateOutputType | null
@@ -2422,6 +2442,7 @@ export namespace Prisma {
     follower_id?: boolean
     following_id?: boolean
     created_at?: boolean
+    status?: boolean
     follower?: boolean | UsersDefaultArgs<ExtArgs>
     following?: boolean | UsersDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["follows"]>
@@ -2433,9 +2454,10 @@ export namespace Prisma {
     follower_id?: boolean
     following_id?: boolean
     created_at?: boolean
+    status?: boolean
   }
 
-  export type FollowsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "follower_id" | "following_id" | "created_at", ExtArgs["result"]["follows"]>
+  export type FollowsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "follower_id" | "following_id" | "created_at" | "status", ExtArgs["result"]["follows"]>
   export type FollowsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     follower?: boolean | UsersDefaultArgs<ExtArgs>
     following?: boolean | UsersDefaultArgs<ExtArgs>
@@ -2452,6 +2474,7 @@ export namespace Prisma {
       follower_id: string
       following_id: string
       created_at: Date
+      status: $Enums.FollowStatus
     }, ExtArgs["result"]["follows"]>
     composites: {}
   }
@@ -2827,6 +2850,7 @@ export namespace Prisma {
     readonly follower_id: FieldRef<"Follows", 'String'>
     readonly following_id: FieldRef<"Follows", 'String'>
     readonly created_at: FieldRef<"Follows", 'DateTime'>
+    readonly status: FieldRef<"Follows", 'FollowStatus'>
   }
     
 
@@ -4148,7 +4172,8 @@ export namespace Prisma {
     id: 'id',
     follower_id: 'follower_id',
     following_id: 'following_id',
-    created_at: 'created_at'
+    created_at: 'created_at',
+    status: 'status'
   };
 
   export type FollowsScalarFieldEnum = (typeof FollowsScalarFieldEnum)[keyof typeof FollowsScalarFieldEnum]
@@ -4239,16 +4264,23 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Status'
+   * Reference to a field of type 'UserStatus'
    */
-  export type EnumStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Status'>
+  export type EnumUserStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserStatus'>
     
 
 
   /**
-   * Reference to a field of type 'Role'
+   * Reference to a field of type 'UserRole'
    */
-  export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role'>
+  export type EnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole'>
+    
+
+
+  /**
+   * Reference to a field of type 'FollowStatus'
+   */
+  export type EnumFollowStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FollowStatus'>
     
 
 
@@ -4278,8 +4310,8 @@ export namespace Prisma {
     location?: StringNullableFilter<"Users"> | string | null
     is_private?: BoolFilter<"Users"> | boolean
     is_verified?: BoolFilter<"Users"> | boolean
-    status?: EnumStatusFilter<"Users"> | $Enums.Status
-    role?: EnumRoleFilter<"Users"> | $Enums.Role
+    status?: EnumUserStatusFilter<"Users"> | $Enums.UserStatus
+    role?: EnumUserRoleFilter<"Users"> | $Enums.UserRole
     followedBy?: FollowsListRelationFilter
     following?: FollowsListRelationFilter
     blockedBy?: BlocksListRelationFilter
@@ -4324,8 +4356,8 @@ export namespace Prisma {
     location?: StringNullableFilter<"Users"> | string | null
     is_private?: BoolFilter<"Users"> | boolean
     is_verified?: BoolFilter<"Users"> | boolean
-    status?: EnumStatusFilter<"Users"> | $Enums.Status
-    role?: EnumRoleFilter<"Users"> | $Enums.Role
+    status?: EnumUserStatusFilter<"Users"> | $Enums.UserStatus
+    role?: EnumUserRoleFilter<"Users"> | $Enums.UserRole
     followedBy?: FollowsListRelationFilter
     following?: FollowsListRelationFilter
     blockedBy?: BlocksListRelationFilter
@@ -4368,8 +4400,8 @@ export namespace Prisma {
     location?: StringNullableWithAggregatesFilter<"Users"> | string | null
     is_private?: BoolWithAggregatesFilter<"Users"> | boolean
     is_verified?: BoolWithAggregatesFilter<"Users"> | boolean
-    status?: EnumStatusWithAggregatesFilter<"Users"> | $Enums.Status
-    role?: EnumRoleWithAggregatesFilter<"Users"> | $Enums.Role
+    status?: EnumUserStatusWithAggregatesFilter<"Users"> | $Enums.UserStatus
+    role?: EnumUserRoleWithAggregatesFilter<"Users"> | $Enums.UserRole
   }
 
   export type FollowsWhereInput = {
@@ -4380,6 +4412,7 @@ export namespace Prisma {
     follower_id?: StringFilter<"Follows"> | string
     following_id?: StringFilter<"Follows"> | string
     created_at?: DateTimeFilter<"Follows"> | Date | string
+    status?: EnumFollowStatusFilter<"Follows"> | $Enums.FollowStatus
     follower?: XOR<UsersScalarRelationFilter, UsersWhereInput>
     following?: XOR<UsersScalarRelationFilter, UsersWhereInput>
   }
@@ -4389,6 +4422,7 @@ export namespace Prisma {
     follower_id?: SortOrder
     following_id?: SortOrder
     created_at?: SortOrder
+    status?: SortOrder
     follower?: UsersOrderByWithRelationInput
     following?: UsersOrderByWithRelationInput
     _relevance?: FollowsOrderByRelevanceInput
@@ -4403,6 +4437,7 @@ export namespace Prisma {
     follower_id?: StringFilter<"Follows"> | string
     following_id?: StringFilter<"Follows"> | string
     created_at?: DateTimeFilter<"Follows"> | Date | string
+    status?: EnumFollowStatusFilter<"Follows"> | $Enums.FollowStatus
     follower?: XOR<UsersScalarRelationFilter, UsersWhereInput>
     following?: XOR<UsersScalarRelationFilter, UsersWhereInput>
   }, "id" | "follower_id_following_id">
@@ -4412,6 +4447,7 @@ export namespace Prisma {
     follower_id?: SortOrder
     following_id?: SortOrder
     created_at?: SortOrder
+    status?: SortOrder
     _count?: FollowsCountOrderByAggregateInput
     _max?: FollowsMaxOrderByAggregateInput
     _min?: FollowsMinOrderByAggregateInput
@@ -4425,6 +4461,7 @@ export namespace Prisma {
     follower_id?: StringWithAggregatesFilter<"Follows"> | string
     following_id?: StringWithAggregatesFilter<"Follows"> | string
     created_at?: DateTimeWithAggregatesFilter<"Follows"> | Date | string
+    status?: EnumFollowStatusWithAggregatesFilter<"Follows"> | $Enums.FollowStatus
   }
 
   export type BlocksWhereInput = {
@@ -4495,8 +4532,8 @@ export namespace Prisma {
     location?: string | null
     is_private?: boolean
     is_verified?: boolean
-    status?: $Enums.Status
-    role?: $Enums.Role
+    status?: $Enums.UserStatus
+    role?: $Enums.UserRole
     followedBy?: FollowsCreateNestedManyWithoutFollowerInput
     following?: FollowsCreateNestedManyWithoutFollowingInput
     blockedBy?: BlocksCreateNestedManyWithoutBlockerInput
@@ -4516,8 +4553,8 @@ export namespace Prisma {
     location?: string | null
     is_private?: boolean
     is_verified?: boolean
-    status?: $Enums.Status
-    role?: $Enums.Role
+    status?: $Enums.UserStatus
+    role?: $Enums.UserRole
     followedBy?: FollowsUncheckedCreateNestedManyWithoutFollowerInput
     following?: FollowsUncheckedCreateNestedManyWithoutFollowingInput
     blockedBy?: BlocksUncheckedCreateNestedManyWithoutBlockerInput
@@ -4537,8 +4574,8 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     is_private?: BoolFieldUpdateOperationsInput | boolean
     is_verified?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     followedBy?: FollowsUpdateManyWithoutFollowerNestedInput
     following?: FollowsUpdateManyWithoutFollowingNestedInput
     blockedBy?: BlocksUpdateManyWithoutBlockerNestedInput
@@ -4558,8 +4595,8 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     is_private?: BoolFieldUpdateOperationsInput | boolean
     is_verified?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     followedBy?: FollowsUncheckedUpdateManyWithoutFollowerNestedInput
     following?: FollowsUncheckedUpdateManyWithoutFollowingNestedInput
     blockedBy?: BlocksUncheckedUpdateManyWithoutBlockerNestedInput
@@ -4579,8 +4616,8 @@ export namespace Prisma {
     location?: string | null
     is_private?: boolean
     is_verified?: boolean
-    status?: $Enums.Status
-    role?: $Enums.Role
+    status?: $Enums.UserStatus
+    role?: $Enums.UserRole
   }
 
   export type UsersUpdateManyMutationInput = {
@@ -4596,8 +4633,8 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     is_private?: BoolFieldUpdateOperationsInput | boolean
     is_verified?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   }
 
   export type UsersUncheckedUpdateManyInput = {
@@ -4613,13 +4650,14 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     is_private?: BoolFieldUpdateOperationsInput | boolean
     is_verified?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   }
 
   export type FollowsCreateInput = {
     id?: string
     created_at?: Date | string
+    status?: $Enums.FollowStatus
     follower: UsersCreateNestedOneWithoutFollowedByInput
     following: UsersCreateNestedOneWithoutFollowingInput
   }
@@ -4629,11 +4667,13 @@ export namespace Prisma {
     follower_id: string
     following_id: string
     created_at?: Date | string
+    status?: $Enums.FollowStatus
   }
 
   export type FollowsUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumFollowStatusFieldUpdateOperationsInput | $Enums.FollowStatus
     follower?: UsersUpdateOneRequiredWithoutFollowedByNestedInput
     following?: UsersUpdateOneRequiredWithoutFollowingNestedInput
   }
@@ -4643,6 +4683,7 @@ export namespace Prisma {
     follower_id?: StringFieldUpdateOperationsInput | string
     following_id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumFollowStatusFieldUpdateOperationsInput | $Enums.FollowStatus
   }
 
   export type FollowsCreateManyInput = {
@@ -4650,11 +4691,13 @@ export namespace Prisma {
     follower_id: string
     following_id: string
     created_at?: Date | string
+    status?: $Enums.FollowStatus
   }
 
   export type FollowsUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumFollowStatusFieldUpdateOperationsInput | $Enums.FollowStatus
   }
 
   export type FollowsUncheckedUpdateManyInput = {
@@ -4662,6 +4705,7 @@ export namespace Prisma {
     follower_id?: StringFieldUpdateOperationsInput | string
     following_id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumFollowStatusFieldUpdateOperationsInput | $Enums.FollowStatus
   }
 
   export type BlocksCreateInput = {
@@ -4757,18 +4801,18 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
-  export type EnumStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.Status[]
-    notIn?: $Enums.Status[]
-    not?: NestedEnumStatusFilter<$PrismaModel> | $Enums.Status
+  export type EnumUserStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserStatus | EnumUserStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.UserStatus[]
+    notIn?: $Enums.UserStatus[]
+    not?: NestedEnumUserStatusFilter<$PrismaModel> | $Enums.UserStatus
   }
 
-  export type EnumRoleFilter<$PrismaModel = never> = {
-    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.Role[]
-    notIn?: $Enums.Role[]
-    not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
+  export type EnumUserRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[]
+    notIn?: $Enums.UserRole[]
+    not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
   }
 
   export type FollowsListRelationFilter = {
@@ -4911,24 +4955,31 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
-  export type EnumStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.Status[]
-    notIn?: $Enums.Status[]
-    not?: NestedEnumStatusWithAggregatesFilter<$PrismaModel> | $Enums.Status
+  export type EnumUserStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserStatus | EnumUserStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.UserStatus[]
+    notIn?: $Enums.UserStatus[]
+    not?: NestedEnumUserStatusWithAggregatesFilter<$PrismaModel> | $Enums.UserStatus
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumStatusFilter<$PrismaModel>
-    _max?: NestedEnumStatusFilter<$PrismaModel>
+    _min?: NestedEnumUserStatusFilter<$PrismaModel>
+    _max?: NestedEnumUserStatusFilter<$PrismaModel>
   }
 
-  export type EnumRoleWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.Role[]
-    notIn?: $Enums.Role[]
-    not?: NestedEnumRoleWithAggregatesFilter<$PrismaModel> | $Enums.Role
+  export type EnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[]
+    notIn?: $Enums.UserRole[]
+    not?: NestedEnumUserRoleWithAggregatesFilter<$PrismaModel> | $Enums.UserRole
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumRoleFilter<$PrismaModel>
-    _max?: NestedEnumRoleFilter<$PrismaModel>
+    _min?: NestedEnumUserRoleFilter<$PrismaModel>
+    _max?: NestedEnumUserRoleFilter<$PrismaModel>
+  }
+
+  export type EnumFollowStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.FollowStatus | EnumFollowStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.FollowStatus[]
+    notIn?: $Enums.FollowStatus[]
+    not?: NestedEnumFollowStatusFilter<$PrismaModel> | $Enums.FollowStatus
   }
 
   export type UsersScalarRelationFilter = {
@@ -4952,6 +5003,7 @@ export namespace Prisma {
     follower_id?: SortOrder
     following_id?: SortOrder
     created_at?: SortOrder
+    status?: SortOrder
   }
 
   export type FollowsMaxOrderByAggregateInput = {
@@ -4959,6 +5011,7 @@ export namespace Prisma {
     follower_id?: SortOrder
     following_id?: SortOrder
     created_at?: SortOrder
+    status?: SortOrder
   }
 
   export type FollowsMinOrderByAggregateInput = {
@@ -4966,6 +5019,17 @@ export namespace Prisma {
     follower_id?: SortOrder
     following_id?: SortOrder
     created_at?: SortOrder
+    status?: SortOrder
+  }
+
+  export type EnumFollowStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.FollowStatus | EnumFollowStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.FollowStatus[]
+    notIn?: $Enums.FollowStatus[]
+    not?: NestedEnumFollowStatusWithAggregatesFilter<$PrismaModel> | $Enums.FollowStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumFollowStatusFilter<$PrismaModel>
+    _max?: NestedEnumFollowStatusFilter<$PrismaModel>
   }
 
   export type BlocksOrderByRelevanceInput = {
@@ -5072,12 +5136,12 @@ export namespace Prisma {
     set?: boolean
   }
 
-  export type EnumStatusFieldUpdateOperationsInput = {
-    set?: $Enums.Status
+  export type EnumUserStatusFieldUpdateOperationsInput = {
+    set?: $Enums.UserStatus
   }
 
-  export type EnumRoleFieldUpdateOperationsInput = {
-    set?: $Enums.Role
+  export type EnumUserRoleFieldUpdateOperationsInput = {
+    set?: $Enums.UserRole
   }
 
   export type FollowsUpdateManyWithoutFollowerNestedInput = {
@@ -5204,6 +5268,10 @@ export namespace Prisma {
     connect?: UsersWhereUniqueInput
   }
 
+  export type EnumFollowStatusFieldUpdateOperationsInput = {
+    set?: $Enums.FollowStatus
+  }
+
   export type UsersUpdateOneRequiredWithoutFollowedByNestedInput = {
     create?: XOR<UsersCreateWithoutFollowedByInput, UsersUncheckedCreateWithoutFollowedByInput>
     connectOrCreate?: UsersCreateOrConnectWithoutFollowedByInput
@@ -5294,18 +5362,18 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
-  export type NestedEnumStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.Status[]
-    notIn?: $Enums.Status[]
-    not?: NestedEnumStatusFilter<$PrismaModel> | $Enums.Status
+  export type NestedEnumUserStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserStatus | EnumUserStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.UserStatus[]
+    notIn?: $Enums.UserStatus[]
+    not?: NestedEnumUserStatusFilter<$PrismaModel> | $Enums.UserStatus
   }
 
-  export type NestedEnumRoleFilter<$PrismaModel = never> = {
-    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.Role[]
-    notIn?: $Enums.Role[]
-    not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
+  export type NestedEnumUserRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[]
+    notIn?: $Enums.UserRole[]
+    not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -5388,29 +5456,47 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
-  export type NestedEnumStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.Status[]
-    notIn?: $Enums.Status[]
-    not?: NestedEnumStatusWithAggregatesFilter<$PrismaModel> | $Enums.Status
+  export type NestedEnumUserStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserStatus | EnumUserStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.UserStatus[]
+    notIn?: $Enums.UserStatus[]
+    not?: NestedEnumUserStatusWithAggregatesFilter<$PrismaModel> | $Enums.UserStatus
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumStatusFilter<$PrismaModel>
-    _max?: NestedEnumStatusFilter<$PrismaModel>
+    _min?: NestedEnumUserStatusFilter<$PrismaModel>
+    _max?: NestedEnumUserStatusFilter<$PrismaModel>
   }
 
-  export type NestedEnumRoleWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.Role[]
-    notIn?: $Enums.Role[]
-    not?: NestedEnumRoleWithAggregatesFilter<$PrismaModel> | $Enums.Role
+  export type NestedEnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[]
+    notIn?: $Enums.UserRole[]
+    not?: NestedEnumUserRoleWithAggregatesFilter<$PrismaModel> | $Enums.UserRole
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumRoleFilter<$PrismaModel>
-    _max?: NestedEnumRoleFilter<$PrismaModel>
+    _min?: NestedEnumUserRoleFilter<$PrismaModel>
+    _max?: NestedEnumUserRoleFilter<$PrismaModel>
+  }
+
+  export type NestedEnumFollowStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.FollowStatus | EnumFollowStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.FollowStatus[]
+    notIn?: $Enums.FollowStatus[]
+    not?: NestedEnumFollowStatusFilter<$PrismaModel> | $Enums.FollowStatus
+  }
+
+  export type NestedEnumFollowStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.FollowStatus | EnumFollowStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.FollowStatus[]
+    notIn?: $Enums.FollowStatus[]
+    not?: NestedEnumFollowStatusWithAggregatesFilter<$PrismaModel> | $Enums.FollowStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumFollowStatusFilter<$PrismaModel>
+    _max?: NestedEnumFollowStatusFilter<$PrismaModel>
   }
 
   export type FollowsCreateWithoutFollowerInput = {
     id?: string
     created_at?: Date | string
+    status?: $Enums.FollowStatus
     following: UsersCreateNestedOneWithoutFollowingInput
   }
 
@@ -5418,6 +5504,7 @@ export namespace Prisma {
     id?: string
     following_id: string
     created_at?: Date | string
+    status?: $Enums.FollowStatus
   }
 
   export type FollowsCreateOrConnectWithoutFollowerInput = {
@@ -5433,6 +5520,7 @@ export namespace Prisma {
   export type FollowsCreateWithoutFollowingInput = {
     id?: string
     created_at?: Date | string
+    status?: $Enums.FollowStatus
     follower: UsersCreateNestedOneWithoutFollowedByInput
   }
 
@@ -5440,6 +5528,7 @@ export namespace Prisma {
     id?: string
     follower_id: string
     created_at?: Date | string
+    status?: $Enums.FollowStatus
   }
 
   export type FollowsCreateOrConnectWithoutFollowingInput = {
@@ -5520,6 +5609,7 @@ export namespace Prisma {
     follower_id?: StringFilter<"Follows"> | string
     following_id?: StringFilter<"Follows"> | string
     created_at?: DateTimeFilter<"Follows"> | Date | string
+    status?: EnumFollowStatusFilter<"Follows"> | $Enums.FollowStatus
   }
 
   export type FollowsUpsertWithWhereUniqueWithoutFollowingInput = {
@@ -5593,8 +5683,8 @@ export namespace Prisma {
     location?: string | null
     is_private?: boolean
     is_verified?: boolean
-    status?: $Enums.Status
-    role?: $Enums.Role
+    status?: $Enums.UserStatus
+    role?: $Enums.UserRole
     following?: FollowsCreateNestedManyWithoutFollowingInput
     blockedBy?: BlocksCreateNestedManyWithoutBlockerInput
     blocking?: BlocksCreateNestedManyWithoutBlockingInput
@@ -5613,8 +5703,8 @@ export namespace Prisma {
     location?: string | null
     is_private?: boolean
     is_verified?: boolean
-    status?: $Enums.Status
-    role?: $Enums.Role
+    status?: $Enums.UserStatus
+    role?: $Enums.UserRole
     following?: FollowsUncheckedCreateNestedManyWithoutFollowingInput
     blockedBy?: BlocksUncheckedCreateNestedManyWithoutBlockerInput
     blocking?: BlocksUncheckedCreateNestedManyWithoutBlockingInput
@@ -5638,8 +5728,8 @@ export namespace Prisma {
     location?: string | null
     is_private?: boolean
     is_verified?: boolean
-    status?: $Enums.Status
-    role?: $Enums.Role
+    status?: $Enums.UserStatus
+    role?: $Enums.UserRole
     followedBy?: FollowsCreateNestedManyWithoutFollowerInput
     blockedBy?: BlocksCreateNestedManyWithoutBlockerInput
     blocking?: BlocksCreateNestedManyWithoutBlockingInput
@@ -5658,8 +5748,8 @@ export namespace Prisma {
     location?: string | null
     is_private?: boolean
     is_verified?: boolean
-    status?: $Enums.Status
-    role?: $Enums.Role
+    status?: $Enums.UserStatus
+    role?: $Enums.UserRole
     followedBy?: FollowsUncheckedCreateNestedManyWithoutFollowerInput
     blockedBy?: BlocksUncheckedCreateNestedManyWithoutBlockerInput
     blocking?: BlocksUncheckedCreateNestedManyWithoutBlockingInput
@@ -5694,8 +5784,8 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     is_private?: BoolFieldUpdateOperationsInput | boolean
     is_verified?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     following?: FollowsUpdateManyWithoutFollowingNestedInput
     blockedBy?: BlocksUpdateManyWithoutBlockerNestedInput
     blocking?: BlocksUpdateManyWithoutBlockingNestedInput
@@ -5714,8 +5804,8 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     is_private?: BoolFieldUpdateOperationsInput | boolean
     is_verified?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     following?: FollowsUncheckedUpdateManyWithoutFollowingNestedInput
     blockedBy?: BlocksUncheckedUpdateManyWithoutBlockerNestedInput
     blocking?: BlocksUncheckedUpdateManyWithoutBlockingNestedInput
@@ -5745,8 +5835,8 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     is_private?: BoolFieldUpdateOperationsInput | boolean
     is_verified?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     followedBy?: FollowsUpdateManyWithoutFollowerNestedInput
     blockedBy?: BlocksUpdateManyWithoutBlockerNestedInput
     blocking?: BlocksUpdateManyWithoutBlockingNestedInput
@@ -5765,8 +5855,8 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     is_private?: BoolFieldUpdateOperationsInput | boolean
     is_verified?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     followedBy?: FollowsUncheckedUpdateManyWithoutFollowerNestedInput
     blockedBy?: BlocksUncheckedUpdateManyWithoutBlockerNestedInput
     blocking?: BlocksUncheckedUpdateManyWithoutBlockingNestedInput
@@ -5785,8 +5875,8 @@ export namespace Prisma {
     location?: string | null
     is_private?: boolean
     is_verified?: boolean
-    status?: $Enums.Status
-    role?: $Enums.Role
+    status?: $Enums.UserStatus
+    role?: $Enums.UserRole
     followedBy?: FollowsCreateNestedManyWithoutFollowerInput
     following?: FollowsCreateNestedManyWithoutFollowingInput
     blocking?: BlocksCreateNestedManyWithoutBlockingInput
@@ -5805,8 +5895,8 @@ export namespace Prisma {
     location?: string | null
     is_private?: boolean
     is_verified?: boolean
-    status?: $Enums.Status
-    role?: $Enums.Role
+    status?: $Enums.UserStatus
+    role?: $Enums.UserRole
     followedBy?: FollowsUncheckedCreateNestedManyWithoutFollowerInput
     following?: FollowsUncheckedCreateNestedManyWithoutFollowingInput
     blocking?: BlocksUncheckedCreateNestedManyWithoutBlockingInput
@@ -5830,8 +5920,8 @@ export namespace Prisma {
     location?: string | null
     is_private?: boolean
     is_verified?: boolean
-    status?: $Enums.Status
-    role?: $Enums.Role
+    status?: $Enums.UserStatus
+    role?: $Enums.UserRole
     followedBy?: FollowsCreateNestedManyWithoutFollowerInput
     following?: FollowsCreateNestedManyWithoutFollowingInput
     blockedBy?: BlocksCreateNestedManyWithoutBlockerInput
@@ -5850,8 +5940,8 @@ export namespace Prisma {
     location?: string | null
     is_private?: boolean
     is_verified?: boolean
-    status?: $Enums.Status
-    role?: $Enums.Role
+    status?: $Enums.UserStatus
+    role?: $Enums.UserRole
     followedBy?: FollowsUncheckedCreateNestedManyWithoutFollowerInput
     following?: FollowsUncheckedCreateNestedManyWithoutFollowingInput
     blockedBy?: BlocksUncheckedCreateNestedManyWithoutBlockerInput
@@ -5886,8 +5976,8 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     is_private?: BoolFieldUpdateOperationsInput | boolean
     is_verified?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     followedBy?: FollowsUpdateManyWithoutFollowerNestedInput
     following?: FollowsUpdateManyWithoutFollowingNestedInput
     blocking?: BlocksUpdateManyWithoutBlockingNestedInput
@@ -5906,8 +5996,8 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     is_private?: BoolFieldUpdateOperationsInput | boolean
     is_verified?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     followedBy?: FollowsUncheckedUpdateManyWithoutFollowerNestedInput
     following?: FollowsUncheckedUpdateManyWithoutFollowingNestedInput
     blocking?: BlocksUncheckedUpdateManyWithoutBlockingNestedInput
@@ -5937,8 +6027,8 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     is_private?: BoolFieldUpdateOperationsInput | boolean
     is_verified?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     followedBy?: FollowsUpdateManyWithoutFollowerNestedInput
     following?: FollowsUpdateManyWithoutFollowingNestedInput
     blockedBy?: BlocksUpdateManyWithoutBlockerNestedInput
@@ -5957,8 +6047,8 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     is_private?: BoolFieldUpdateOperationsInput | boolean
     is_verified?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     followedBy?: FollowsUncheckedUpdateManyWithoutFollowerNestedInput
     following?: FollowsUncheckedUpdateManyWithoutFollowingNestedInput
     blockedBy?: BlocksUncheckedUpdateManyWithoutBlockerNestedInput
@@ -5968,12 +6058,14 @@ export namespace Prisma {
     id?: string
     following_id: string
     created_at?: Date | string
+    status?: $Enums.FollowStatus
   }
 
   export type FollowsCreateManyFollowingInput = {
     id?: string
     follower_id: string
     created_at?: Date | string
+    status?: $Enums.FollowStatus
   }
 
   export type BlocksCreateManyBlockerInput = {
@@ -5991,6 +6083,7 @@ export namespace Prisma {
   export type FollowsUpdateWithoutFollowerInput = {
     id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumFollowStatusFieldUpdateOperationsInput | $Enums.FollowStatus
     following?: UsersUpdateOneRequiredWithoutFollowingNestedInput
   }
 
@@ -5998,17 +6091,20 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     following_id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumFollowStatusFieldUpdateOperationsInput | $Enums.FollowStatus
   }
 
   export type FollowsUncheckedUpdateManyWithoutFollowerInput = {
     id?: StringFieldUpdateOperationsInput | string
     following_id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumFollowStatusFieldUpdateOperationsInput | $Enums.FollowStatus
   }
 
   export type FollowsUpdateWithoutFollowingInput = {
     id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumFollowStatusFieldUpdateOperationsInput | $Enums.FollowStatus
     follower?: UsersUpdateOneRequiredWithoutFollowedByNestedInput
   }
 
@@ -6016,12 +6112,14 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     follower_id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumFollowStatusFieldUpdateOperationsInput | $Enums.FollowStatus
   }
 
   export type FollowsUncheckedUpdateManyWithoutFollowingInput = {
     id?: StringFieldUpdateOperationsInput | string
     follower_id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumFollowStatusFieldUpdateOperationsInput | $Enums.FollowStatus
   }
 
   export type BlocksUpdateWithoutBlockerInput = {

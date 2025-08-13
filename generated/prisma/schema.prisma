@@ -15,20 +15,20 @@ datasource db {
 }
 
 model Users {
-  id              String   @id @default(uuid())
-  username        String   @unique
+  id              String     @id @default(uuid())
+  username        String     @unique
   name            String
-  email           String   @unique
+  email           String     @unique
   password        String
-  created_at      DateTime @default(now())
-  updated_at      DateTime @default(now()) @updatedAt
+  created_at      DateTime   @default(now())
+  updated_at      DateTime   @default(now()) @updatedAt
   profile_picture String?
   bio             String?
   location        String?
-  is_private      Boolean  @default(false)
-  is_verified     Boolean  @default(false)
-  status          Status   @default(ACTIVE)
-  role            Role     @default(USER)
+  is_private      Boolean    @default(false)
+  is_verified     Boolean    @default(false)
+  status          UserStatus @default(ACTIVE)
+  role            UserRole   @default(USER)
 
   followedBy Follows[] @relation("FollowedBy")
   following  Follows[] @relation("Following")
@@ -38,10 +38,11 @@ model Users {
 }
 
 model Follows {
-  id           String   @id @default(uuid())
+  id           String       @id @default(uuid())
   follower_id  String
   following_id String
-  created_at   DateTime @default(now())
+  created_at   DateTime     @default(now())
+  status       FollowStatus @default(ACCEPTED)
 
   follower  Users @relation("FollowedBy", fields: [follower_id], references: [id], onDelete: Cascade)
   following Users @relation("Following", fields: [following_id], references: [id], onDelete: Cascade)
@@ -61,14 +62,20 @@ model Blocks {
   @@unique([blocker_id, blocked_id])
 }
 
-enum Role {
+enum UserRole {
   USER
   ADMIN
 }
 
-enum Status {
+enum UserStatus {
   ACTIVE
   INACTIVE
   SUSPENDED
   DELETED
+}
+
+enum FollowStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
 }

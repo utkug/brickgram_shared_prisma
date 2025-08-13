@@ -141,7 +141,8 @@ exports.Prisma.FollowsScalarFieldEnum = {
   id: 'id',
   follower_id: 'follower_id',
   following_id: 'following_id',
-  created_at: 'created_at'
+  created_at: 'created_at',
+  status: 'status'
 };
 
 exports.Prisma.BlocksScalarFieldEnum = {
@@ -183,16 +184,22 @@ exports.Prisma.BlocksOrderByRelevanceFieldEnum = {
   blocker_id: 'blocker_id',
   blocked_id: 'blocked_id'
 };
-exports.Status = exports.$Enums.Status = {
+exports.UserStatus = exports.$Enums.UserStatus = {
   ACTIVE: 'ACTIVE',
   INACTIVE: 'INACTIVE',
   SUSPENDED: 'SUSPENDED',
   DELETED: 'DELETED'
 };
 
-exports.Role = exports.$Enums.Role = {
+exports.UserRole = exports.$Enums.UserRole = {
   USER: 'USER',
   ADMIN: 'ADMIN'
+};
+
+exports.FollowStatus = exports.$Enums.FollowStatus = {
+  PENDING: 'PENDING',
+  ACCEPTED: 'ACCEPTED',
+  DECLINED: 'DECLINED'
 };
 
 exports.Prisma.ModelName = {
