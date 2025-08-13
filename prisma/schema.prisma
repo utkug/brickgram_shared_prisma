@@ -27,8 +27,8 @@ model Users {
   location  String?
   is_private Boolean @default(false)
   is_verified Boolean @default(false)
-  status Status @default(ACTIVE)
-  role Role @default(USER)
+  status UserStatus @default(ACTIVE)
+  role UserRole @default(USER)
 
   followedBy Follows[] @relation("FollowedBy")
   following Follows[] @relation("Following")
@@ -42,6 +42,7 @@ model Follows {
   follower_id String
   following_id  String
   created_at  DateTime @default(now())
+  status FollowStatus @default(ACCEPTED)
   
   follower Users @relation("FollowedBy", fields: [follower_id], references: [id], onDelete: Cascade)
   following Users @relation("Following", fields: [following_id], references: [id], onDelete: Cascade)
@@ -61,13 +62,19 @@ model Blocks {
   @@unique([blocker_id, blocked_id])
 }
 
-enum Role {
+enum UserRole {
   USER
   ADMIN
 }
-enum Status {
+enum UserStatus {
   ACTIVE
   INACTIVE
   SUSPENDED
   DELETED
+}
+
+enum FollowStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
 }
