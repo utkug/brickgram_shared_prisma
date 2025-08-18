@@ -35,6 +35,9 @@ model Users {
 
   blockedBy Blocks[] @relation("BlockedBy")
   blocking Blocks[] @relation("Blocking")
+
+  receivedNotifications Notifications[] @relation("NotificationReceiver")
+  sentNotifications     Notifications[] @relation("NotificationSender")
 }
 
 model Follows {
@@ -60,6 +63,29 @@ model Blocks {
   blocking Users @relation("Blocking", fields: [blocked_id], references: [id], onDelete: Cascade)
 
   @@unique([blocker_id, blocked_id])
+}
+
+model Notifications {
+  id String @id @default(uuid())
+  user_id String
+  sender_id String?
+  message String
+  metadata Json?
+  type NotificationType
+  created_at DateTime @default(now())
+  is_read Boolean @default(false)
+
+  user Users @relation("NotificationReceiver", fields: [user_id], references: [id], onDelete: Cascade)
+  sender Users? @relation("NotificationSender", fields: [sender_id], references: [id], onDelete: SetNull)
+}
+
+enum NotificationType {
+  FOLLOW_CREATED
+  MENTION
+  CHAT_MESSAGE
+  COMMENT_ADDED
+  LIKE_POST
+  SYSTEM
 }
 
 enum UserRole {

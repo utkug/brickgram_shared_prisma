@@ -152,9 +152,25 @@ exports.Prisma.BlocksScalarFieldEnum = {
   created_at: 'created_at'
 };
 
+exports.Prisma.NotificationsScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  sender_id: 'sender_id',
+  message: 'message',
+  metadata: 'metadata',
+  type: 'type',
+  created_at: 'created_at',
+  is_read: 'is_read'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.NullsOrder = {
@@ -184,6 +200,24 @@ exports.Prisma.BlocksOrderByRelevanceFieldEnum = {
   blocker_id: 'blocker_id',
   blocked_id: 'blocked_id'
 };
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
+
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+};
+
+exports.Prisma.NotificationsOrderByRelevanceFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  sender_id: 'sender_id',
+  message: 'message'
+};
 exports.UserStatus = exports.$Enums.UserStatus = {
   ACTIVE: 'ACTIVE',
   INACTIVE: 'INACTIVE',
@@ -202,10 +236,20 @@ exports.FollowStatus = exports.$Enums.FollowStatus = {
   DECLINED: 'DECLINED'
 };
 
+exports.NotificationType = exports.$Enums.NotificationType = {
+  FOLLOW_CREATED: 'FOLLOW_CREATED',
+  MENTION: 'MENTION',
+  CHAT_MESSAGE: 'CHAT_MESSAGE',
+  COMMENT_ADDED: 'COMMENT_ADDED',
+  LIKE_POST: 'LIKE_POST',
+  SYSTEM: 'SYSTEM'
+};
+
 exports.Prisma.ModelName = {
   Users: 'Users',
   Follows: 'Follows',
-  Blocks: 'Blocks'
+  Blocks: 'Blocks',
+  Notifications: 'Notifications'
 };
 
 /**
