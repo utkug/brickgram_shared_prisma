@@ -129,6 +129,7 @@ exports.Prisma.UsersScalarFieldEnum = {
   created_at: 'created_at',
   updated_at: 'updated_at',
   profile_picture: 'profile_picture',
+  banner: 'banner',
   bio: 'bio',
   location: 'location',
   is_private: 'is_private',
@@ -150,6 +151,35 @@ exports.Prisma.BlocksScalarFieldEnum = {
   blocker_id: 'blocker_id',
   blocked_id: 'blocked_id',
   created_at: 'created_at'
+};
+
+exports.Prisma.PostsScalarFieldEnum = {
+  id: 'id',
+  author_id: 'author_id',
+  post_text: 'post_text',
+  image_url: 'image_url',
+  is_edited: 'is_edited',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.CommentsScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  post_id: 'post_id',
+  comment_text: 'comment_text',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  parent_id: 'parent_id'
+};
+
+exports.Prisma.LikesScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  post_id: 'post_id',
+  comment_id: 'comment_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 };
 
 exports.Prisma.NotificationsScalarFieldEnum = {
@@ -185,6 +215,7 @@ exports.Prisma.UsersOrderByRelevanceFieldEnum = {
   email: 'email',
   password: 'password',
   profile_picture: 'profile_picture',
+  banner: 'banner',
   bio: 'bio',
   location: 'location'
 };
@@ -199,6 +230,28 @@ exports.Prisma.BlocksOrderByRelevanceFieldEnum = {
   id: 'id',
   blocker_id: 'blocker_id',
   blocked_id: 'blocked_id'
+};
+
+exports.Prisma.PostsOrderByRelevanceFieldEnum = {
+  id: 'id',
+  author_id: 'author_id',
+  post_text: 'post_text',
+  image_url: 'image_url'
+};
+
+exports.Prisma.CommentsOrderByRelevanceFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  post_id: 'post_id',
+  comment_text: 'comment_text',
+  parent_id: 'parent_id'
+};
+
+exports.Prisma.LikesOrderByRelevanceFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  post_id: 'post_id',
+  comment_id: 'comment_id'
 };
 
 exports.Prisma.JsonNullValueFilter = {
@@ -249,6 +302,9 @@ exports.Prisma.ModelName = {
   Users: 'Users',
   Follows: 'Follows',
   Blocks: 'Blocks',
+  Posts: 'Posts',
+  Comments: 'Comments',
+  Likes: 'Likes',
   Notifications: 'Notifications'
 };
 

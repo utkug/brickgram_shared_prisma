@@ -23,6 +23,7 @@ model Users {
   created_at      DateTime   @default(now())
   updated_at      DateTime   @default(now()) @updatedAt
   profile_picture String?
+  banner          String?
   bio             String?
   location        String?
   is_private      Boolean    @default(false)
@@ -35,6 +36,11 @@ model Users {
 
   blockedBy Blocks[] @relation("BlockedBy")
   blocking  Blocks[] @relation("Blocking")
+
+  postAuthor Posts[] @relation("postAuthor")
+
+  commentUser Comments[] @relation("commentUser")
+  likeUser    Likes[]    @relation("likeUser")
 
   receivedNotifications Notifications[] @relation("NotificationReceiver")
   sentNotifications     Notifications[] @relation("NotificationSender")
@@ -63,6 +69,62 @@ model Blocks {
   blocking Users @relation("Blocking", fields: [blocked_id], references: [id], onDelete: Cascade)
 
   @@unique([blocker_id, blocked_id])
+}
+
+model Posts {
+  id         String   @id @default(uuid())
+  author_id  String
+  post_text  String
+  image_url  String?
+  is_edited  Boolean  @default(false)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
+  author Users @relation("postAuthor", fields: [author_id], references: [id], onDelete: Cascade)
+
+  commentPost Comments[] @relation("commentPost")
+  likePost    Likes[]    @relation("likePost")
+
+  @@index([author_id])
+  @@index([created_at])
+}
+
+model Comments {
+  id           String   @id @default(uuid())
+  user_id      String
+  post_id      String
+  comment_text String
+  created_at   DateTime @default(now())
+  updated_at   DateTime @default(now()) @updatedAt
+
+  user Users @relation("commentUser", fields: [user_id], references: [id], onDelete: Cascade)
+  post Posts @relation("commentPost", fields: [post_id], references: [id], onDelete: Cascade)
+
+  //Self-relation
+  parent_id String?
+  parent    Comments?  @relation("commentReplies", fields: [parent_id], references: [id], onDelete: Cascade)
+  replies   Comments[] @relation("commentReplies")
+
+  likeComment Likes[] @relation("likeComment")
+
+  @@index([parent_id])
+  @@index([post_id])
+}
+
+model Likes {
+  id         String   @id @default(uuid())
+  user_id    String
+  post_id    String?
+  comment_id String?
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
+  user    Users     @relation("likeUser", fields: [user_id], references: [id], onDelete: Cascade)
+  post    Posts?    @relation("likePost", fields: [post_id], references: [id], onDelete: Cascade)
+  comment Comments? @relation("likeComment", fields: [comment_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, post_id])
+  @@unique([user_id, comment_id])
 }
 
 model Notifications {
