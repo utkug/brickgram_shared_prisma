@@ -184,7 +184,8 @@ exports.Prisma.LikesScalarFieldEnum = {
 
 exports.Prisma.NotificationsScalarFieldEnum = {
   id: 'id',
-  user_id: 'user_id',
+  event_id: 'event_id',
+  receiver_id: 'receiver_id',
   sender_id: 'sender_id',
   message: 'message',
   metadata: 'metadata',
@@ -267,7 +268,8 @@ exports.Prisma.QueryMode = {
 
 exports.Prisma.NotificationsOrderByRelevanceFieldEnum = {
   id: 'id',
-  user_id: 'user_id',
+  event_id: 'event_id',
+  receiver_id: 'receiver_id',
   sender_id: 'sender_id',
   message: 'message'
 };

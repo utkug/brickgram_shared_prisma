@@ -128,17 +128,20 @@ model Likes {
 }
 
 model Notifications {
-  id         String           @id @default(uuid())
-  user_id    String
-  sender_id  String?
-  message    String
-  metadata   Json?
-  type       NotificationType
-  created_at DateTime         @default(now())
-  is_read    Boolean          @default(false)
+  id          String           @id @default(uuid())
+  event_id    String?          @unique // From kafka
+  receiver_id String
+  sender_id   String?
+  message     String
+  metadata    Json?
+  type        NotificationType
+  created_at  DateTime         @default(now())
+  is_read     Boolean          @default(false)
 
-  user   Users  @relation("NotificationReceiver", fields: [user_id], references: [id], onDelete: Cascade)
-  sender Users? @relation("NotificationSender", fields: [sender_id], references: [id], onDelete: SetNull)
+  receiver Users  @relation("NotificationReceiver", fields: [receiver_id], references: [id], onDelete: Cascade)
+  sender   Users? @relation("NotificationSender", fields: [sender_id], references: [id], onDelete: SetNull)
+
+  @@index([receiver_id, is_read, created_at])
 }
 
 enum NotificationType {
